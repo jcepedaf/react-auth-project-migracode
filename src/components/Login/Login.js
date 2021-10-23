@@ -1,15 +1,20 @@
 import React, {useState} from 'react';
 import './Login.css';
+import Singup from '../Singup/Singup';
 
-export default function Login() {
+export default function Login({setToken}) {
 
 const [email,setEmail] = useState("");
 const [password,setPassword] = useState("");
+const [update,setUpdate] = useState(true);
+//const [jwt,setJwt] = useState("");
+//console.log(jwt)
 
-  const singin = ()=>{ 
-  var url = 'http://localhost:4000/user/sign-up';
+  const singin = (event)=>{ 
+    event.preventDefault();
+  var url = 'http://localhost:4000/user/sign-in';
   var data = {"email":email,"password":password };
-  console.log(data)
+  //console.log(data)
   fetch(url, {
     method: 'POST', 
     body: JSON.stringify(data), 
@@ -17,14 +22,13 @@ const [password,setPassword] = useState("");
       'Content-Type': 'application/json'
     }
   }).then(res => res.json())
-   .then(response => console.log('Success:', response))
+   .then(response => setToken(response.jwtToken))
    .catch(error => console.error('Error:', error));
 
 
  }
-
-
-  return(
+if(update){
+    return(
     <div className="login-wrapper">
       <h1>Please Log In</h1>
       <form >
@@ -38,8 +42,15 @@ const [password,setPassword] = useState("");
         </label>
         <div>
           <button onClick={singin}>Submit</button>
+          <button onClick={()=>setUpdate(false)}>SingUp</button>
         </div>
       </form>
+      
     </div>
   )
+
+}
+else{
+  return <Singup />
+}
 }
