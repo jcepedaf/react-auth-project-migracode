@@ -1,13 +1,5 @@
-import React  from 'react';
+import React from "react";
 
 export default function Home() {
-
-  
-
-  
-
-    
-   
-  return(<h2>Home Acces Granted</h2>);
-
-};
+  return <h2>Home Acces Granted</h2>;
+}
